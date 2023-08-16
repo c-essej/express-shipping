@@ -1,11 +1,17 @@
 "use strict";
+const shipItApi = require("../shipItApi"); //{ shipItApi: "func"}
+shipItApi.shipProduct = jest.fn();
 
 const request = require("supertest");
 const app = require("../app");
 
 
+
 describe("POST /", function () {
   test("valid", async function () {
+
+    shipItApi.shipProduct.mockReturnValue(7);
+
     const resp = await request(app).post("/shipments").send({
       productId: 1000,
       name: "Test Tester",
@@ -13,7 +19,7 @@ describe("POST /", function () {
       zip: "12345-6789",
     });
 
-    expect(resp.body).toEqual({ shipped: expect.any(Number) });
+    expect(resp.body).toEqual({ shipped: 7 });
   });
 
 
@@ -133,13 +139,13 @@ describe("POST /", function () {
       });
     expect(resp.statusCode).toEqual(400);
     expect(resp.body).toEqual({
-        "error": {
-          "message": [
-            "instance.zip does not meet minimum length of 5"
-          ],
-          "status": 400
-        }
-      });
+      "error": {
+        "message": [
+          "instance.zip does not meet minimum length of 5"
+        ],
+        "status": 400
+      }
+    });
   });
 
 
