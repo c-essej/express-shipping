@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://localhost:3000/shipments.schema.json",
+    "title": "Shipping",
+    "description": "Order for shipping request.",
+    "type": "object",
+    "properties": {
+      "productId": {"type": "integer",
+                    "minimum": 1000
+                },
+      "name": {"type": "string"},
+      "addr": {"type": "string"},
+      "zip": {"type": "string",
+            "minLength": 5,
+            "maxLength": 10
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+      "productId",
+      "name",
+      "addr",
+      "zip"
+    ]
+  }
